@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--tg-theme-bg-color, #fff);
+            color: var(--tg-theme-text-color, #000);
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-control, .custom-control-label {
+            color: var(--tg-theme-text-color, #000);
+        }
+        .card {
+            background-color: var(--tg-theme-secondary-bg-color, #f8f9fa);
+            margin-bottom: 1rem;
+        }
+        .card-header {
+            background-color: var(--tg-theme-button-color, #0088cc);
+            color: var(--tg-theme-button-text-color, #fff);
+        }
+        .btn-primary {
+            background-color: var(--tg-theme-button-color, #0088cc);
+            border-color: var(--tg-theme-button-color, #0088cc);
+            color: var(--tg-theme-button-text-color, #fff);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Настройки приложения</h2>
+        <form id="settingsForm">
+            <!-- Интервал запуска -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Интервал запуска
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="interval_start">От (часов):</label>
+                                <input type="number" class="form-control" id="interval_start" name="interval_start" min="0" max="23" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="interval_end">До (часов):</label>
+                                <input type="number" class="form-control" id="interval_end" name="interval_end" min="0" max="23" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Прокси -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Прокси
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="proxy" name="proxy" placeholder="Введите адрес прокси">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Метод формирования цены -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Метод формирования цены
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="single_price" name="pricing_method" value="single" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="single_price">Одна цена для всех точек продаж</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="multiple_prices" name="pricing_method" value="multiple" class="custom-control-input">
+                            <label class="custom-control-label" for="multiple_prices">Разные цены продаж</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Изменение цены -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Диапазон изменения цены
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="price_change_min">От (%):</label>
+                                <input type="number" class="form-control" id="price_change_min" name="price_change_min" step="0.1" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="price_change_max">До (%):</label>
+                                <input type="number" class="form-control" id="price_change_max" name="price_change_max" step="0.1" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Избранные товары -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Избранные товары
+                </div>
+                <div class="card-body">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="favorite_products_only" name="favorite_products_only">
+                        <label class="custom-control-label" for="favorite_products_only">Переоценивать только избранные товары</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Конкуренты -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Конкуренты
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="exclude_competitors" name="exclude_competitors">
+                            <label class="custom-control-label" for="exclude_competitors">Исключить конкурентов по списку</label>
+                        </div>
+                        <textarea class="form-control mt-2" id="competitors_list" name="competitors_list" rows="3" placeholder="Введите список конкурентов"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Путь сохранения -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Сохранение документа
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="save_path" name="save_path" placeholder="Введите путь сохранения">
+                    </div>
+                </div>
+            </div>
+
+            <!-- FTP -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    FTP
+                </div>
+                <div class="card-body">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="use_ftp" name="use_ftp">
+                        <label class="custom-control-label" for="use_ftp">Использовать FTP</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Сохранить настройки</button>
+        </form>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = {
+                interval_start: parseInt(formData.get('interval_start')),
+                interval_end: parseInt(formData.get('interval_end')),
+                proxy: formData.get('proxy'),
+                pricing_method: formData.get('pricing_method'),
+                price_change_min: parseFloat(formData.get('price_change_min')),
+                price_change_max: parseFloat(formData.get('price_change_max')),
+                favorite_products_only: formData.get('favorite_products_only') === 'on',
+                exclude_competitors: formData.get('exclude_competitors') === 'on',
+                competitors_list: formData.get('competitors_list'),
+                save_path: formData.get('save_path'),
+                use_ftp: formData.get('use_ftp') === 'on'
+            };
+
+            tg.sendData(JSON.stringify(data));
+            tg.close();
+        });
+
+        // Дополнительные обработчики
+        document.getElementById('exclude_competitors').addEventListener('change', function(e) {
+            const competitorsList = document.getElementById('competitors_list');
+            competitorsList.disabled = !e.target.checked;
+        });
+
+        // Инициализация
+        document.getElementById('competitors_list').disabled = !document.getElementById('exclude_competitors').checked;
+    </script>
+</body>
