@@ -267,10 +267,26 @@
             }
         });
 
-        // Остальной JavaScript код остается без изменений
         document.getElementById('settingsForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // ... остальной код обработчика формы ...
+
+            const formData = new FormData(e.target);
+            const data = {
+                interval_start: parseInt(formData.get('interval_start')),
+                interval_end: parseInt(formData.get('interval_end')),
+                proxy: formData.get('proxy'),
+                pricing_method: formData.get('pricing_method'),
+                price_change_min: parseFloat(formData.get('price_change_min')),
+                price_change_max: parseFloat(formData.get('price_change_max')),
+                favorite_products_only: formData.get('favorite_products_only') === 'on',
+                exclude_competitors: formData.get('exclude_competitors') === 'on',
+                competitors_list: formData.get('competitors_list'),
+                save_path: formData.get('save_path'),
+                use_ftp: formData.get('use_ftp') === 'on'
+            };
+
+            tg.sendData(JSON.stringify(data));
+            tg.close();
         });
 
         document.getElementById('exclude_competitors').addEventListener('change', function(e) {
